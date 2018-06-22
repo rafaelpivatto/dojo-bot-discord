@@ -1,0 +1,1 @@
+dojo-bot-resolution
