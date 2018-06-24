@@ -16,4 +16,8 @@ exports.get = function(url, callback) {
     
 };
 
+exports.req = function(url) {
+    request(url, () => {});
+};
+
 module.exports = exports;
