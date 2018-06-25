@@ -7,6 +7,11 @@ exports.registerEvents = function(client) {
         if (msg.content.includes('monitor')) {
             msg.reply('Monitor??? Mamilos!!!!');
         }
+        if (msg.content.match('[Pp][ÃAãa][Oo]')) {
+            if (!msg.content.includes('Desculpe, me enganei.')) {
+                msg.reply('Ahhh! você disse Pão?!? Desculpe, me enganei.');
+            }
+        }
     });
     
     client.on('guildMemberAdd', (member) => {
