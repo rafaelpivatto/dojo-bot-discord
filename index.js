@@ -10,7 +10,8 @@ const client = new Commando.Client({
 
 client.registry.registerGroups([
     {id: 'football'},
-    {id: 'weather'}
+    {id: 'weather'},
+    {id: 'zoeira'}
 ])
 .registerCommandsIn(__dirname + '/commands');
 
