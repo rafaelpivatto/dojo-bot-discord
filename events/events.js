@@ -8,9 +8,31 @@ exports.registerEvents = function(client) {
             msg.reply('Monitor??? Mamilos!!!!');
         }
         if (msg.content.match('[Pp][ÃAãa][Oo]')) {
-            if (!msg.content.includes('Desculpe, me enganei.')) {
-                msg.reply('Ahhh! você disse Pão?!? Desculpe, me enganei.');
-            }
+            if (client.user.id != msg.author.id) {
+				let reply;
+				if (msg.author.username != 'wgvicente') {
+					let msgs = [
+						"Pão! Uma deliciosa escolha para o café da manhã senhor.",
+						"Acredito que ja conversamos sobre este assunto.",
+						"Ahhh! você disse pão?!? Desculpe, me enganei.",
+						null,
+						null,
+						"Você me lembrou de algo importante. Já recebeu o seu hoje?",
+						null,
+						"O pão enobrece o homem!",
+						null,
+						"Ahhh um pãozinho! Iguaria impar!",
+						null
+					];
+					let rand = getRandomInt(10);
+					reply = msgs[rand];
+				} else {
+					reply = "Sábio mestre! Compartilhe conosco seu conhecimento sobre esta iguaria!"
+				}
+				if (reply) {
+					msg.reply(reply);
+				}
+			}
         }
     });
     
@@ -24,3 +46,7 @@ exports.registerEvents = function(client) {
 };
 
 module.exports = exports;
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
