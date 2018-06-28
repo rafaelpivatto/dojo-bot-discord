@@ -16,11 +16,11 @@ module.exports = class PenaltiCommand extends Command {
         let connection = await voiceChannel.join();
         if(isReady && connection) {
             isReady = false;
-            let finish = connection.playFile('https://www.myinstants.com/media/sounds/ai-pai-para-hihi.mp3');
+            let finish = connection.playFile(__dirname+'/aipai.mp3');
             finish.on('end', () =>{
                 isReady = true;
                 voiceChannel.leave();
-            });
+            })
         }
     }
 };
