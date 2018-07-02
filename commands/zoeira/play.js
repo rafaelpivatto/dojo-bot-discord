@@ -11,7 +11,7 @@ module.exports = class PenaltiCommand extends Command {
         });
     }
     async run(msg, args){
-        const channels = msg.guild.channels.filter(channel => channel.name === 'general' && channel.type === 'voice' );
+        const channels = msg.guild.channels.filter(channel => channel.name === 'Geral' && channel.type === 'voice' );
         var voiceChannel = channels.values().next().value;
         let isReady = true;
         let connection = await voiceChannel.join();
