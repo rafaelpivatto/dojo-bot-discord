@@ -6,6 +6,7 @@ const cheerio = require('cheerio');
 const requester = require('../../util/requester.js');
 const baseURL = 'https://www.myinstants.com';
 let run = false;
+let voiceChannel;
 
 module.exports = class InstantsCommand extends Command {
     constructor(client) {
@@ -17,6 +18,15 @@ module.exports = class InstantsCommand extends Command {
         });
     }
     async run(msg, args){
+        if (!args || args === '') {
+            return msg.reply('executa o comando !instants <termo de busca>');
+        } else if (args === 'parar'){
+            if (voiceChannel) {
+                voiceChannel.leave();
+                return msg.reply('ok, não está mais aqui quem falou.');
+            }
+            return;
+        }
         if (run) {
             return msg.reply('Espere um pouco amiguinho, estou atendendo outra chamada...');
         } else {
@@ -33,7 +43,6 @@ module.exports = class InstantsCommand extends Command {
                         const instants = $('.instant .small-button');
                         if (!instants || !instants[0] || 
                             !instants[0].attribs || !instants[0].attribs.onmousedown) {
-                            console.log(instants);
                             message.delete();
                             run = false;
                             return msg.reply('poxa, não encontrei nada :( tenta outro termo de busca.');
@@ -42,11 +51,15 @@ module.exports = class InstantsCommand extends Command {
                         mp3URL = encodeURI(baseURL + mp3URL.replace('play(\'', '').replace('\')', ''));
                         const stream = streamin(mp3URL);
                         const channels = msg.guild.channels.filter(channel => channel.name === 'Geral' && channel.type === 'voice' );
-                        const voiceChannel = channels.values().next().value;
+                        voiceChannel = channels.values().next().value;
                         voiceChannel.join().then(connection => {
                             message.delete();
                             const dispatcher = connection.playStream(stream);
                             dispatcher.on('end', () =>{
+                                voiceChannel.leave();
+                                run = false;
+                            })
+                            dispatcher.on('error', () =>{
                                 voiceChannel.leave();
                                 run = false;
                             })
